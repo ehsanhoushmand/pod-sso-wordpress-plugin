@@ -37,14 +37,14 @@ function pod_sso_register_settings() {
 
 	add_settings_section(
 		'podsso_section_login',
-		'Login Setting',
+		esc_html__('Login Setting', 'pod-sso-plugin'),
 		'podsso_callback_section_login',
 		'podsso'
 	);
 
 	add_settings_section(
 		'podsso_section_api',
-		'Api Setting',
+		esc_html__('Api Setting', 'pod-sso-plugin'),
 		'podsso_callback_section_api',
 		'podsso'
 	);

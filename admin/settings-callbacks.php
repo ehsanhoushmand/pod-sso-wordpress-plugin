@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // callback: login section
 function podsso_callback_section_login() {
 
-	echo '<p>These settings enable you to customize the Pod SSO.</p>';
+	echo '<p>' . esc_html__('These settings enable you to customize the Pod SSO.', 'pod-sso-plugin') . '</p>';
 
 }
 
@@ -17,7 +17,7 @@ function podsso_callback_section_login() {
 // callback: admin section
 function podsso_callback_section_api() {
 
-	echo '<p>These settings enable you to customize the Pod Api.</p>';
+	echo '<p>' . esc_html__('These settings enable you to customize the Pod Api.', 'pod-sso-plugin') . '</p>';
 
 }
 

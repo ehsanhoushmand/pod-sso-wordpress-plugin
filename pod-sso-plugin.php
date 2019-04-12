@@ -17,19 +17,32 @@ if( ! defined('WPINC')) {
 	die;
 }
 
+if ( ! defined( 'PODSSO_FILE' ) ) {
+	define( 'PODSSO_FILE', plugin_dir_path( __FILE__ ) );
+}
+
+// load text domain
+function podsso_load_textdomain() {
+
+	load_plugin_textdomain( 'pod-sso-plugin', false, PODSSO_FILE . 'languages/' );
+
+}
+add_action( 'plugins_loaded', 'podsso_load_textdomain' );
 
 
 // if admin area
 if ( is_admin() ) {
 
 	// include plugin dependencies
-	require_once plugin_dir_path( __FILE__ ) . 'admin/admin-menu.php';
-	require_once plugin_dir_path( __FILE__ ) . 'admin/settings-page.php';
-	require_once plugin_dir_path( __FILE__ ) . 'admin/settings-register.php';
-	require_once plugin_dir_path( __FILE__ ) . 'admin/settings-callbacks.php';
-	require_once plugin_dir_path( __FILE__ ) . 'admin/settings-validate.php';
+	require_once PODSSO_FILE . 'admin/admin-menu.php';
+	require_once PODSSO_FILE . 'admin/settings-page.php';
+	require_once PODSSO_FILE . 'admin/settings-register.php';
+	require_once PODSSO_FILE . 'admin/settings-callbacks.php';
+	require_once PODSSO_FILE . 'admin/settings-validate.php';
 
 }
+
+require_once( PODSSO_FILE . 'includes/class-podsso-client.php');
 
 
 // default plugin options

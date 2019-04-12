@@ -26,6 +26,8 @@ function podsso_callback_validate_options( $input ) {
 
 	}
 
+	$input['redirect_to_dashboard'] = $input['redirect_to_dashboard'] ?? 0;
+
 	return $input;
 	
 }
