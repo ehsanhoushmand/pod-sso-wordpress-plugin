@@ -115,7 +115,7 @@ function pod_sso_register_settings() {
 		'podsso_callback_field_text',
 		'podsso',
 		'podsso_section_api',
-		[ 'id' => 'pay_invoice_url', 'label' => 'https://gw.pod.land/v1/pbc/payinvoice' ]
+		[ 'id' => 'pay_invoice_url', 'label' => 'https://pay.pod.land/v1/pbc/payinvoice' ]
 	);
 
 	add_settings_field(

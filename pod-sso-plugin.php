@@ -51,7 +51,7 @@ function podsso_options_default() {
 	return array(
 		'server_url' => 'https://accounts.pod.land/oauth2',
 		'api_url' => 'https://api.pod.land/srv/core',
-		'pay_invoice_url' => 'https://gw.pod.land/v1/pbc/payinvoice',
+		'pay_invoice_url' => 'https://pay.pod.land/v1/pbc/payinvoice',
 	);
 
 }
