@@ -49,18 +49,33 @@ function pod_sso_register_settings() {
 		'podsso'
 	);
 
-	/*
+	try {
+		$options = get_option( 'podsso_options' );
+		$server_url = $options['api_url'] . '/nzh/biz/businessDealingList';
+		$requestArray = array(
+			'method'      => 'POST',
+			'timeout'     => 45,
+			'redirection' => 5,
+			'httpversion' => '1.0',
+			'blocking'    => true,
+			'headers'     => array(
+				'_token_' => $options['api_token'],
+				'_token_issuer_' => '1'
+			),
+			'body'        => array(
+				'enable' => 'true'
+			),
+			'cookies'     => array(),
+			'sslverify'   => false
+		);
 
-	add_settings_field(
-    string   $id,
-		string   $title,
-		callable $callback,
-		string   $page,
-		string   $section = 'default',
-		array    $args = []
-	);
-
-	*/
+		$response   = wp_remote_post( $server_url, $requestArray );
+		$res_info = json_decode( $response['body'], true);
+		$options['business_count'] = $res_info['count'];
+		update_option('podsso_options', $options);
+	} catch (Exception $exception) {
+		error_log($exception->getMessage());
+	}
 
 	//login section
 	add_settings_field(
@@ -126,6 +141,41 @@ function pod_sso_register_settings() {
 		'podsso_section_api',
 		[ 'id' => 'guild_code', 'label' => 'Pod Guild Code' ]
 	);
+
+	if($res_info['count'] > 0)
+	{
+		$count = -1;
+		foreach ($res_info['result'] as $result)
+		{
+			++$count;
+			add_settings_section(
+				'podsso_section_business_' . $result['business']['id'],
+				esc_html__('اطلاعات شرکت ذینفع: ' . $result['business']['name'], 'pod-sso-plugin'),
+				'podsso_callback_section_business',
+				'podsso'
+			);
+
+			add_settings_field(
+				'guild_code_' . $count,
+				'Guild Code',
+				'podsso_callback_field_text',
+				'podsso',
+				'podsso_section_business_' . $result['business']['id'],
+				[ 'id' => 'guild_code_' . $count, 'label' => 'Pod Guild Code' ]
+			);
+
+			add_settings_field(
+				'business_share_' . $count,
+				'Business share',
+				'podsso_callback_field_text',
+				'podsso',
+				'podsso_section_business_' . $result['business']['id'],
+				[ 'id' => 'business_share_' . $count, 'label' => esc_html__('fixed share or percentage share (ex. 1000 or 30%)', 'pod-sso-plugin') ]
+			);
+			$options['business_id_' . $count] = $result['business']['id'];
+		}
+		update_option('podsso_options', $options);
+	}
 
 }
 add_action( 'admin_init', 'pod_sso_register_settings' );

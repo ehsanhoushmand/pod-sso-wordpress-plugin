@@ -36,12 +36,12 @@ function pod_single_sign_on_login_button_shortcode( $atts ) {
 	$a = shortcode_atts( array(
 		'type'   => 'primary',
 		'title'  => 'Login using Single Sign On',
-		'class'  => 'podsso-button',
-		'target' => '_blank',
-		'text'   => 'Single Sign On'
+		'class'  => 'podsso-button button button-primary button-large ',
+		'target' => '_self',
+		'text'   => 'POD SIGN IN'
 	), $atts );
 
-	return '<a class="' . $a['class'] . '" href="' . site_url( '?podSso' ) . '" title="' . $a['title'] . '" target="' . $a['target'] . '">' . $a['text'] . '</a>';
+	return '<a class="' . $a['class'] . '" style="color: white; width:100%; text-align:center; margin-bottom:1em;" href="' . site_url( '?podSso' ) . '" title="' . $a['title'] . '" target="' . $a['target'] . '">' . $a['text'] . '</a>';
 }
 
 add_shortcode( 'podsso_button', 'pod_single_sign_on_login_button_shortcode' );

@@ -21,6 +21,13 @@ function podsso_callback_section_api() {
 
 }
 
+// callback: admin section
+function podsso_callback_section_business( $args ) {
+
+	echo '<p>' . '</p>';
+
+}
+
 
 // callback: text field
 function podsso_callback_field_text( $args ) {
@@ -30,7 +37,7 @@ function podsso_callback_field_text( $args ) {
 	$id    = $args['id'] ?? '';
 	$label = $args['label'] ?? '';
 
-	$value = sanitize_text_field( $options[$id] ) ?? '';
+	$value = sanitize_text_field( $options[$id] ?? '');
 
 	echo '<input id="podsso_options_'. $id .'" name="podsso_options['. $id .']" type="text" size="40" value="'. $value .'"><br />';
 	echo '<label for="podsso_options_'. $id .'">'. $label .'</label>';
