@@ -136,7 +136,7 @@ function pod_sso_register_settings() {
 	add_settings_field(
 		'guild_code',
 		'Guild Code',
-		'podsso_callback_field_text',
+		'podsso_callback_field_select',
 		'podsso',
 		'podsso_section_api',
 		[ 'id' => 'guild_code', 'label' => 'Pod Guild Code' ]
@@ -158,7 +158,7 @@ function pod_sso_register_settings() {
 			add_settings_field(
 				'guild_code_' . $count,
 				'Guild Code',
-				'podsso_callback_field_text',
+				'podsso_callback_field_select',
 				'podsso',
 				'podsso_section_business_' . $result['business']['id'],
 				[ 'id' => 'guild_code_' . $count, 'label' => 'Pod Guild Code' ]

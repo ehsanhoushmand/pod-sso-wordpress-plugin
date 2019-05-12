@@ -45,6 +45,50 @@ function podsso_callback_field_text( $args ) {
 }
 
 
+function podsso_guilds_options() {
+    $options = get_option( 'podsso_options' );
+    $server_url = $options['api_url'] . '/nzh/guildList';
+    $requestArray = array(
+        'method'      => 'GET',
+        'timeout'     => 45,
+        'redirection' => 5,
+        'httpversion' => '1.0',
+        'blocking'    => true,
+        'headers'     => array(
+            '_token_' => $options['api_token'],
+            '_token_issuer_' => '1'
+        ),
+        'cookies'     => array(),
+        'sslverify'   => false
+    );
+
+    $response   = wp_remote_get( $server_url, $requestArray );
+    $res_info = json_decode( $response['body'], true);
+
+    return $res_info['result'];
+}
+
+function podsso_callback_field_select($args)
+{
+    $options = get_option( 'podsso_options', podsso_options_default() );
+    $id    = $args['id'] ?? '';
+    $selected_option = sanitize_text_field( $options[$id] ?? '');
+    $select_options = podsso_guilds_options();
+
+    echo '<select id="podsso_options_'. $id .'" name="podsso_options['. $id .']">';
+
+    foreach ( $select_options as $option ) {
+
+        $selected = selected( $selected_option === $option['code'], true, false );
+
+        echo '<option value="'. $option['code'] .'"'. $selected .'>'. $option['name'] .'</option>';
+
+    }
+
+    echo '</select>';
+}
+
+
 
 
 
