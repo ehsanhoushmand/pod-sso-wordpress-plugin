@@ -133,13 +133,15 @@ function pod_sso_register_settings() {
 		[ 'id' => 'pay_invoice_url', 'label' => 'https://pay.pod.land/v1/pbc/payinvoice' ]
 	);
 
+	$select_option = podsso_guilds_options();
+
 	add_settings_field(
 		'guild_code',
 		'Guild Code',
 		'podsso_callback_field_select',
 		'podsso',
 		'podsso_section_api',
-		[ 'id' => 'guild_code', 'label' => 'Pod Guild Code' ]
+		[ 'id' => 'guild_code', 'label' => 'Pod Guild Code', 'option' => $select_option ]
 	);
 
 	if($res_info['count'] > 0)
@@ -161,7 +163,7 @@ function pod_sso_register_settings() {
 				'podsso_callback_field_select',
 				'podsso',
 				'podsso_section_business_' . $result['business']['id'],
-				[ 'id' => 'guild_code_' . $count, 'label' => 'Pod Guild Code' ]
+				[ 'id' => 'guild_code_' . $count, 'label' => 'Pod Guild Code', 'option' => $select_option ]
 			);
 
 			add_settings_field(
@@ -179,5 +181,28 @@ function pod_sso_register_settings() {
 
 }
 add_action( 'admin_init', 'pod_sso_register_settings' );
+
+function podsso_guilds_options() {
+	$options = get_option( 'podsso_options' );
+	$server_url = $options['api_url'] . '/nzh/guildList';
+	$requestArray = array(
+		'method'      => 'GET',
+		'timeout'     => 45,
+		'redirection' => 5,
+		'httpversion' => '1.0',
+		'blocking'    => true,
+		'headers'     => array(
+			'_token_' => $options['api_token'],
+			'_token_issuer_' => '1'
+		),
+		'cookies'     => array(),
+		'sslverify'   => false
+	);
+
+	$response   = wp_remote_get( $server_url, $requestArray );
+	$res_info = json_decode( $response['body'], true);
+
+	return $res_info['result'];
+}
 
 
