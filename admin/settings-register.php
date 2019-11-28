@@ -8,6 +8,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 // register plugin settings
 function pod_sso_register_settings() {
 
+	if(get_option('podsso_options')) {
+		update_option('podsso_options', array_merge(get_option('podsso_options'), podsso_options_default()));
+	} else {
+		add_option('podsso_options', podsso_options_default());
+	}
 	/*
 
 	register_setting(
@@ -46,6 +51,13 @@ function pod_sso_register_settings() {
 		'podsso_section_api',
 		esc_html__('Api Setting', 'pod-sso-plugin'),
 		'podsso_callback_section_api',
+		'podsso'
+	);
+
+	add_settings_section(
+		'podsso_section_avand',
+		esc_html__('Avand Setting', 'pod-sso-plugin'),
+		'podsso_callback_section_avand',
 		'podsso'
 	);
 
@@ -102,7 +114,7 @@ function pod_sso_register_settings() {
 		'podsso_callback_field_text',
 		'podsso',
 		'podsso_section_login',
-		[ 'id' => 'server_url', 'label' => 'https://accounts.pod.land/oauth2' ]
+		[ 'id' => 'server_url', 'label' => 'https://accounts.pod.ir/oauth2' ]
 	);
 
 	// api section
@@ -112,7 +124,7 @@ function pod_sso_register_settings() {
 		'podsso_callback_field_text',
 		'podsso',
 		'podsso_section_api',
-		[ 'id' => 'api_url', 'label' => 'https://api.pod.land/srv/core' ]
+		[ 'id' => 'api_url', 'label' => 'https://api.pod.ir/srv/core' ]
 	);
 
 	add_settings_field(
@@ -130,18 +142,38 @@ function pod_sso_register_settings() {
 		'podsso_callback_field_text',
 		'podsso',
 		'podsso_section_api',
-		[ 'id' => 'pay_invoice_url', 'label' => 'https://pay.pod.land/v1/pbc/payinvoice' ]
+		[ 'id' => 'pay_invoice_url', 'label' => 'https://pay.pod.ir/v1/pbc/payinvoice' ]
 	);
 
 	$select_option = podsso_guilds_options();
 
+	if($select_option) {
+		add_settings_field(
+			'guild_code',
+			'Guild Code',
+			'podsso_callback_field_select',
+			'podsso',
+			'podsso_section_api',
+			[ 'id' => 'guild_code', 'label' => 'Pod Guild Code', 'option' => $select_option ]
+		);
+	}
+
 	add_settings_field(
-		'guild_code',
-		'Guild Code',
-		'podsso_callback_field_select',
+		'avand_api_key',
+		'Avand Api Key',
+		'podsso_callback_field_text',
 		'podsso',
-		'podsso_section_api',
-		[ 'id' => 'guild_code', 'label' => 'Pod Guild Code', 'option' => $select_option ]
+		'podsso_section_avand',
+		[ 'id' => 'avand_api_key', 'label' => 'Avand Api Key', 'option' => $select_option ]
+	);
+
+	add_settings_field(
+		'avand_business_id',
+		'Pod Business Id',
+		'podsso_callback_field_text',
+		'podsso',
+		'podsso_section_avand',
+		[ 'id' => 'avand_business_id', 'label' => 'Pod Business Id', 'option' => $select_option ]
 	);
 
 	if($res_info['count'] > 0)

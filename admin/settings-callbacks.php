@@ -20,6 +20,12 @@ function podsso_callback_section_api() {
 	echo '<p>' . esc_html__('These settings enable you to customize the Pod Api.', 'pod-sso-plugin') . '</p>';
 
 }
+// callback: avand section
+function podsso_callback_section_avand() {
+
+	echo '<p>' . esc_html__('These settings enable you to customize the Avand Api.', 'pod-sso-plugin') . '</p>';
+
+}
 
 // callback: admin section
 function podsso_callback_section_business( $args ) {

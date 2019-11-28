@@ -2,9 +2,9 @@
 
 /**
  * Plugin Name: Pod SSO Plugin
- * Plugin URI:  http://docs.pod.land
+ * Plugin URI:  http://docs.pod.ir
  * Description: Login with pod account
- * Version:     1.0.0
+ * Version:     2.0.0
  * Author:      Ehsan Houshmand
  * Author URI:  http://ehsanhoushmand.ir
  * Text Domain: pod-sso-plugin
@@ -49,9 +49,9 @@ require_once( PODSSO_FILE . 'includes/class-podsso-client.php');
 function podsso_options_default() {
 
 	return array(
-		'server_url' => 'https://accounts.pod.land/oauth2',
-		'api_url' => 'https://api.pod.land/srv/core',
-		'pay_invoice_url' => 'https://pay.pod.land/v1/pbc/payinvoice',
+		'server_url' => 'https://accounts.pod.ir/oauth2',
+		'api_url' => 'https://api.pod.ir/srv/core',
+		'pay_invoice_url' => 'https://pay.pod.ir/v1/pbc/payinvoice',
 	);
 
 }
